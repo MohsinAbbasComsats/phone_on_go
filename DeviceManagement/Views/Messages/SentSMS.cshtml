@@ -1,0 +1,26 @@
+﻿@model IEnumerable<DeviceManagement.Models.sms>
+
+<div class="row no-margin">
+    <table class="table table-striped m-b-none dataTable" data-ride="datatables" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+        <thead>
+            <tr role="row">
+                <th width="20%" class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 217px;">SMS ID</th>
+                <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 278px;">Message</th>
+                <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 278px;">Mobile Number</th>
+                <th width="15%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 154px;">Time Stamp</th>
+            </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+            @foreach (var d in Model)
+            {
+                <tr class="odd">
+                    <td class=" sorting_1">@d.sms_id</td>
+                    <td class="">@d.message_text</td>
+                    <td class="">@d.mobile_number</td>
+                    <td class="">@DateTime.FromBinary(BitConverter.ToInt64(d.sms_timestamp, 0)).ToShortDateString();</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="calllogs_table">
+          <Key>
+            <PropertyRef Name="calllogs_id" />
+          </Key>
+          <Property Name="calllogs_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="device_id" Type="int" Nullable="false" />
+          <Property Name="mobile_number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="calllog_type_id" Type="int" Nullable="false" />
+          <Property Name="calllogs_timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="calllogtype_table">
+          <Key>
+            <PropertyRef Name="calllog_type_id" />
+          </Key>
+          <Property Name="calllog_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_title" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="device_table">
+          <Key>
+            <PropertyRef Name="device_id" />
+          </Key>
+          <Property Name="device_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="device_uid" Type="nvarchar" MaxLength="20" />
+          <Property Name="device_imei" Type="nvarchar" MaxLength="20" />
+          <Property Name="device_title" Type="nvarchar" MaxLength="20" />
+          <Property Name="timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="activation_code" Type="nvarchar(max)" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <EntityType Name="services_table">
+          <Key>
+            <PropertyRef Name="service_id" />
+          </Key>
+          <Property Name="service_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_title" Type="nvarchar" MaxLength="50" />
+          <Property Name="service_controller" Type="nvarchar" MaxLength="50" />
+          <Property Name="service_price" Type="bigint" />
+          <Property Name="isdeleted" Type="bit" Nullable="false" />
+          <Property Name="icon" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="sms_table">
+          <Key>
+            <PropertyRef Name="sms_id" />
+          </Key>
+          <Property Name="sms_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="device_id" Type="int" Nullable="false" />
+          <Property Name="message_text" Type="nvarchar(max)" />
+          <Property Name="mobile_number" Type="nvarchar" MaxLength="20" />
+          <Property Name="sms_type_id" Type="int" Nullable="false" />
+          <Property Name="sms_timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="smstype_table">
+          <Key>
+            <PropertyRef Name="sms_type_id" />
+          </Key>
+          <Property Name="sms_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_title" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_subscription_table">
+          <Key>
+            <PropertyRef Name="subscription_id" />
+          </Key>
+          <Property Name="subscription_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" Nullable="false" />
+          <Property Name="service_id" Type="int" Nullable="false" />
+          <Property Name="subcription_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="user_table">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="userpassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_calllogs_table_calllogtype_table">
+          <End Role="calllogtype_table" Type="Self.calllogtype_table" Multiplicity="1" />
+          <End Role="calllogs_table" Type="Self.calllogs_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calllogtype_table">
+              <PropertyRef Name="calllog_type_id" />
+            </Principal>
+            <Dependent Role="calllogs_table">
+              <PropertyRef Name="calllog_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_calllogs_table_device_table">
+          <End Role="device_table" Type="Self.device_table" Multiplicity="1" />
+          <End Role="calllogs_table" Type="Self.calllogs_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="device_table">
+              <PropertyRef Name="device_id" />
+            </Principal>
+            <Dependent Role="calllogs_table">
+              <PropertyRef Name="device_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_device_table_user_table">
+          <End Role="user_table" Type="Self.user_table" Multiplicity="1" />
+          <End Role="device_table" Type="Self.device_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_table">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="device_table">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sms_table_device_table">
+          <End Role="device_table" Type="Self.device_table" Multiplicity="1" />
+          <End Role="sms_table" Type="Self.sms_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="device_table">
+              <PropertyRef Name="device_id" />
+            </Principal>
+            <Dependent Role="sms_table">
+              <PropertyRef Name="device_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sms_table_smstype_table">
+          <End Role="smstype_table" Type="Self.smstype_table" Multiplicity="1" />
+          <End Role="sms_table" Type="Self.sms_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="smstype_table">
+              <PropertyRef Name="sms_type_id" />
+            </Principal>
+            <Dependent Role="sms_table">
+              <PropertyRef Name="sms_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_subscription_subscription_table">
+          <End Role="services_table" Type="Self.services_table" Multiplicity="1" />
+          <End Role="user_subscription_table" Type="Self.user_subscription_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services_table">
+              <PropertyRef Name="service_id" />
+            </Principal>
+            <Dependent Role="user_subscription_table">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_subscription_table">
+          <End Role="user_table" Type="Self.user_table" Multiplicity="1" />
+          <End Role="user_subscription_table" Type="Self.user_subscription_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_table">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="user_subscription_table">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="calllogs_table" EntityType="Self.calllogs_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="calllogtype_table" EntityType="Self.calllogtype_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="device_table" EntityType="Self.device_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="services_table" EntityType="Self.services_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sms_table" EntityType="Self.sms_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="smstype_table" EntityType="Self.smstype_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_subscription_table" EntityType="Self.user_subscription_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_table" EntityType="Self.user_table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_calllogs_table_calllogtype_table" Association="Self.FK_calllogs_table_calllogtype_table">
+            <End Role="calllogtype_table" EntitySet="calllogtype_table" />
+            <End Role="calllogs_table" EntitySet="calllogs_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_calllogs_table_device_table" Association="Self.FK_calllogs_table_device_table">
+            <End Role="device_table" EntitySet="device_table" />
+            <End Role="calllogs_table" EntitySet="calllogs_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_device_table_user_table" Association="Self.FK_device_table_user_table">
+            <End Role="user_table" EntitySet="user_table" />
+            <End Role="device_table" EntitySet="device_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sms_table_device_table" Association="Self.FK_sms_table_device_table">
+            <End Role="device_table" EntitySet="device_table" />
+            <End Role="sms_table" EntitySet="sms_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sms_table_smstype_table" Association="Self.FK_sms_table_smstype_table">
+            <End Role="smstype_table" EntitySet="smstype_table" />
+            <End Role="sms_table" EntitySet="sms_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_subscription_subscription_table" Association="Self.FK_subscription_subscription_table">
+            <End Role="services_table" EntitySet="services_table" />
+            <End Role="user_subscription_table" EntitySet="user_subscription_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_subscription_table" Association="Self.FK_user_subscription_table">
+            <End Role="user_table" EntitySet="user_table" />
+            <End Role="user_subscription_table" EntitySet="user_subscription_table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="calllogs">
+          <Key>
+            <PropertyRef Name="calllogs_id" />
+          </Key>
+          <Property Name="calllogs_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="device_id" Type="Int32" Nullable="false" />
+          <Property Name="mobile_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="calllog_type_id" Type="Int32" Nullable="false" />
+          <Property Name="calllogs_timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="calllogtype" Relationship="Self.FK_calllogs_table_calllogtype_table" FromRole="calllogs_table" ToRole="calllogtype_table" />
+          <NavigationProperty Name="device" Relationship="Self.FK_calllogs_table_device_table" FromRole="calllogs_table" ToRole="device_table" />
+        </EntityType>
+        <EntityType Name="calllogtype">
+          <Key>
+            <PropertyRef Name="calllog_type_id" />
+          </Key>
+          <Property Name="calllog_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="calllogs" Relationship="Self.FK_calllogs_table_calllogtype_table" FromRole="calllogtype_table" ToRole="calllogs_table" />
+        </EntityType>
+        <EntityType Name="device">
+          <Key>
+            <PropertyRef Name="device_id" />
+          </Key>
+          <Property Name="device_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="device_uid" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="device_imei" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="device_title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="calllogs" Relationship="Self.FK_calllogs_table_device_table" FromRole="device_table" ToRole="calllogs_table" />
+          <NavigationProperty Name="sms" Relationship="Self.FK_sms_table_device_table" FromRole="device_table" ToRole="sms_table" />
+          <NavigationProperty Name="user" Relationship="Models.FK_device_table_user_table" FromRole="device" ToRole="user_table" />
+          <Property Name="activation_code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          </EntityType>
+        <EntityType Name="sms">
+          <Key>
+            <PropertyRef Name="sms_id" />
+          </Key>
+          <Property Name="sms_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="device_id" Type="Int32" Nullable="false" />
+          <Property Name="message_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="mobile_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="sms_type_id" Type="Int32" Nullable="false" />
+          <Property Name="sms_timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="device" Relationship="Self.FK_sms_table_device_table" FromRole="sms_table" ToRole="device_table" />
+          <NavigationProperty Name="smstype" Relationship="Self.FK_sms_table_smstype_table" FromRole="sms_table" ToRole="smstype_table" />
+        </EntityType>
+        <EntityType Name="smstype">
+          <Key>
+            <PropertyRef Name="sms_type_id" />
+          </Key>
+          <Property Name="sms_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="sms" Relationship="Self.FK_sms_table_smstype_table" FromRole="smstype_table" ToRole="sms_table" />
+        </EntityType>
+        <Association Name="FK_calllogs_table_calllogtype_table">
+          <End Role="calllogtype_table" Type="Models.calllogtype" Multiplicity="1" />
+          <End Role="calllogs_table" Type="Models.calllogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="calllogtype_table">
+              <PropertyRef Name="calllog_type_id" />
+            </Principal>
+            <Dependent Role="calllogs_table">
+              <PropertyRef Name="calllog_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_calllogs_table_device_table">
+          <End Role="device_table" Type="Models.device" Multiplicity="1" />
+          <End Role="calllogs_table" Type="Models.calllogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="device_table">
+              <PropertyRef Name="device_id" />
+            </Principal>
+            <Dependent Role="calllogs_table">
+              <PropertyRef Name="device_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sms_table_device_table">
+          <End Role="device_table" Type="Models.device" Multiplicity="1" />
+          <End Role="sms_table" Type="Models.sms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="device_table">
+              <PropertyRef Name="device_id" />
+            </Principal>
+            <Dependent Role="sms_table">
+              <PropertyRef Name="device_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sms_table_smstype_table">
+          <End Role="smstype_table" Type="Models.smstype" Multiplicity="1" />
+          <End Role="sms_table" Type="Models.sms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="smstype_table">
+              <PropertyRef Name="sms_type_id" />
+            </Principal>
+            <Dependent Role="sms_table">
+              <PropertyRef Name="sms_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeviceManagementDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="calllogs" EntityType="Models.calllogs" />
+          <EntitySet Name="calllogtypes" EntityType="Models.calllogtype" />
+          <EntitySet Name="devices" EntityType="Models.device" />
+          <EntitySet Name="sms" EntityType="Models.sms" />
+          <EntitySet Name="smstypes" EntityType="Models.smstype" />
+          <AssociationSet Name="FK_calllogs_table_calllogtype_table" Association="Self.FK_calllogs_table_calllogtype_table">
+            <End Role="calllogtype_table" EntitySet="calllogtypes" />
+            <End Role="calllogs_table" EntitySet="calllogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_calllogs_table_device_table" Association="Self.FK_calllogs_table_device_table">
+            <End Role="device_table" EntitySet="devices" />
+            <End Role="calllogs_table" EntitySet="calllogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sms_table_device_table" Association="Self.FK_sms_table_device_table">
+            <End Role="device_table" EntitySet="devices" />
+            <End Role="sms_table" EntitySet="sms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sms_table_smstype_table" Association="Self.FK_sms_table_smstype_table">
+            <End Role="smstype_table" EntitySet="smstypes" />
+            <End Role="sms_table" EntitySet="sms" />
+          </AssociationSet>
+          <EntitySet Name="users" EntityType="Models.user" />
+          <AssociationSet Name="FK_device_table_user_table" Association="Models.FK_device_table_user_table">
+            <End Role="user_table" EntitySet="users" />
+            <End Role="device" EntitySet="devices" />
+          </AssociationSet>
+          <EntitySet Name="services" EntityType="Models.services" />
+          <EntitySet Name="subscriptions" EntityType="Models.subscription" />
+          <AssociationSet Name="FK_subscription_subscription_table" Association="Models.FK_subscription_subscription_table">
+            <End Role="services_table" EntitySet="services" />
+            <End Role="user_subscription_table" EntitySet="subscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_subscription_table" Association="Models.FK_user_subscription_table">
+            <End Role="user" EntitySet="users" />
+            <End Role="user_subscription_table" EntitySet="subscriptions" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userpassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="device" Relationship="Models.FK_device_table_user_table" FromRole="user_table" ToRole="device" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user_subscription_table" Relationship="Models.FK_user_subscription_table" FromRole="user" ToRole="user_subscription_table" />
+        </EntityType>
+        <Association Name="FK_device_table_user_table">
+          <End Type="Models.user" Role="user_table" Multiplicity="1" />
+          <End Type="Models.device" Role="device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_table">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="device">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="services">
+          <Key>
+            <PropertyRef Name="service_id" />
+          </Key>
+          <Property Name="service_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="service_price" Type="Int64" />
+          <Property Name="isdeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="subscription" Relationship="Models.FK_subscription_subscription_table" FromRole="services_table" ToRole="user_subscription_table" />
+          <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="service_controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="subscription">
+          <Key>
+            <PropertyRef Name="subscription_id" />
+          </Key>
+          <Property Name="subscription_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" Nullable="false" />
+          <Property Name="service_id" Type="Int32" Nullable="false" />
+          <Property Name="subcription_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="services" Relationship="Models.FK_subscription_subscription_table" FromRole="user_subscription_table" ToRole="services_table" />
+          <NavigationProperty Name="user" Relationship="Models.FK_user_subscription_table" FromRole="user_subscription_table" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_subscription_subscription_table">
+          <End Type="Models.services" Role="services_table" Multiplicity="1" />
+          <End Type="Models.subscription" Role="user_subscription_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services_table">
+              <PropertyRef Name="service_id" />
+            </Principal>
+            <Dependent Role="user_subscription_table">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_subscription_table">
+          <End Type="Models.user" Role="user" Multiplicity="1" />
+          <End Type="Models.subscription" Role="user_subscription_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="user_subscription_table">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DeviceManagementDBContext">
+          <EntitySetMapping Name="calllogs">
+            <EntityTypeMapping TypeName="Models.calllogs">
+              <MappingFragment StoreEntitySet="calllogs_table">
+                <ScalarProperty Name="calllogs_id" ColumnName="calllogs_id" />
+                <ScalarProperty Name="device_id" ColumnName="device_id" />
+                <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
+                <ScalarProperty Name="calllog_type_id" ColumnName="calllog_type_id" />
+                <ScalarProperty Name="calllogs_timestamp" ColumnName="calllogs_timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="calllogtypes">
+            <EntityTypeMapping TypeName="Models.calllogtype">
+              <MappingFragment StoreEntitySet="calllogtype_table">
+                <ScalarProperty Name="calllog_type_id" ColumnName="calllog_type_id" />
+                <ScalarProperty Name="type_title" ColumnName="type_title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devices">
+            <EntityTypeMapping TypeName="Models.device">
+              <MappingFragment StoreEntitySet="device_table">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="activation_code" ColumnName="activation_code" />
+                <ScalarProperty Name="device_id" ColumnName="device_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="device_uid" ColumnName="device_uid" />
+                <ScalarProperty Name="device_imei" ColumnName="device_imei" />
+                <ScalarProperty Name="device_title" ColumnName="device_title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sms">
+            <EntityTypeMapping TypeName="Models.sms">
+              <MappingFragment StoreEntitySet="sms_table">
+                <ScalarProperty Name="sms_id" ColumnName="sms_id" />
+                <ScalarProperty Name="device_id" ColumnName="device_id" />
+                <ScalarProperty Name="message_text" ColumnName="message_text" />
+                <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
+                <ScalarProperty Name="sms_type_id" ColumnName="sms_type_id" />
+                <ScalarProperty Name="sms_timestamp" ColumnName="sms_timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="smstypes">
+            <EntityTypeMapping TypeName="Models.smstype">
+              <MappingFragment StoreEntitySet="smstype_table">
+                <ScalarProperty Name="sms_type_id" ColumnName="sms_type_id" />
+                <ScalarProperty Name="type_title" ColumnName="type_title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="Models.user">
+              <MappingFragment StoreEntitySet="user_table">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="userpassword" ColumnName="userpassword" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="services">
+            <EntityTypeMapping TypeName="Models.services">
+              <MappingFragment StoreEntitySet="services_table">
+                <ScalarProperty Name="service_controller" ColumnName="service_controller" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="isdeleted" ColumnName="isdeleted" />
+                <ScalarProperty Name="service_price" ColumnName="service_price" />
+                <ScalarProperty Name="service_title" ColumnName="service_title" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subscriptions">
+            <EntityTypeMapping TypeName="Models.subscription">
+              <MappingFragment StoreEntitySet="user_subscription_table">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="subcription_date" ColumnName="subcription_date" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="subscription_id" ColumnName="subscription_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

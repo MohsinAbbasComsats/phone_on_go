@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayoutPage.cshtml";
+}
+
+<div class="row">
+    <section class="panel">
+        <header class="panel-heading text-right">
+            <ul class="nav nav-tabs pull-left">
+                <li class="active">
+                    <a href="#ReceivedCalls" data-toggle="tab">
+                        <i class="fa fa-lg text-default">Received</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#DialedCalls" data-toggle="tab">
+                        <i class="fa fa-lg text-default">Dialed</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#MissedCalls" data-toggle="tab">
+                        <i class="fa fa-lg text-default">Missed</i>
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="ReceivedCalls">
+                    <div class="row no-margin">
+                        @{
+                            Html.RenderAction("ReceivedCalls", "CallLogs");
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="DialedCalls">
+                    <div class="row no-margin">
+                        @{
+                            Html.RenderAction("DialedCalls", "CallLogs");
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="MissedCalls">
+                    <div class="row no-margin">
+                        @{
+                            Html.RenderAction("MissedCalls", "CallLogs");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+

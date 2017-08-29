@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/fonts")
+
+    <style type="text/css">
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body style="background-color:#eee;">
+    <div class="container">
+        <div class="row">
+            <form class="form-signin" action='@Url.Action("Login","Master")' method="post">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DeviceManagement.Models.sms>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayoutPage.cshtml";
+}
+
+<div class="row">
+    <section class="panel">
+        <header class="panel-heading text-right">
+            <ul class="nav nav-tabs pull-left">
+                <li class="active">
+                    <a href="#ReceivedSMS" data-toggle="tab">
+                        <i class="fa fa-inbox fa-lg text-default">Received</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#SentSMS" data-toggle="tab">
+                        <i class="fa fa-mail-forward fa-lg text-default">Sent</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#DraftSMS" data-toggle="tab">
+                        <i class="fa fa-mail-forward fa-lg text-default">Draft</i>
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="ReceivedSMS">
+                    <div class="row no-margin">
+                        @{
+                            Html.RenderAction("ReceivedSMS", "Messages");
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="SentSMS">
+                    <div class="row no-margin">
+                        @{
+                            Html.RenderAction("SentSMS", "Messages");
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="DraftSMS">
+                    <div class="row no-margin">
+                        @{
+                            Html.RenderAction("DraftSMS", "Messages");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

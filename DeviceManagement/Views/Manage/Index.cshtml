@@ -1,0 +1,247 @@
+﻿@model List<DeviceManagement.Models.UserSubstribedServicesViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayoutPage.cshtml";
+}
+<style type="text/css">
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+<div class="container center-block" style="padding:10px;width:60%;margin-left:auto;margin-right:auto;">
+    <div class="panel-group" id="accordion">
+        <div class="panel ">
+            <form action="@Url.Action("SyncServices", "Manage")" method="post">
+                <div class="panel-heading bg bg-inverse">
+                    <div class="pull-left">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#service">Services</a>
+                        </h4>
+                    </div>
+                    <div class="pull-right">
+                       
+                    </div>
+
+                </div>
+                <div id="service" class="panel-collapse collapse in">
+                    <div class="panel-body no-padding">
+                        @{
+                            Html.RenderAction("Services", "Manage");
+                        }
+                    </div>
+                </div>
+                <button id="submit" type="submit" class="bg bg-inverse" value="Sync" style="color:white;border:none;">
+                    <i class="fa fa-fw fa-refresh"></i> Sync
+                </button>
+            </form>
+        </div>
+        <div class="panel">
+            <div class="panel-heading bg bg-inverse">
+                <div class="pull-left">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#notification">Notification</a>
+                    </h4>
+                </div>
+                <div class="pull-right">
+                    <a href="#" style="color:white;">
+                        <i class="fa fa-fw fa-refresh"></i> Sync
+                    </a>
+                </div>
+            </div>
+            <div id="notification" class="panel-collapse collapse">
+                <div class="panel-body no-padding">
+                    <div class="list-group  no-margin">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                                    <i class="fa fa-fw fa-phone" style="font-size:20px"></i>
+                                </div>
+                                <div class="col-xs-8 no-padding no-margin">
+                                    <h4>Calls</h4>
+                                </div>
+                                <div class="col-xs-2 no-padding no-margin">
+                                    <label class="switch no-margin">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                                    <i class="fa fa-fw fa-phone" style="font-size:20px"></i>
+                                </div>
+                                <div class="col-xs-8 no-padding no-margin">
+                                    <h4>Text Messages</h4>
+                                </div>
+                                <div class="col-xs-2 no-padding no-margin">
+                                    <label class="switch no-margin">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                                    <i class="fa fa-fw fa-phone" style="font-size:20px"></i>
+                                </div>
+                                <div class="col-xs-8 no-padding no-margin">
+                                    <h4>Contacts</h4>
+                                </div>
+                                <div class="col-xs-2 no-padding no-margin">
+                                    <label class="switch no-margin">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                                    <i class="fa fa-fw fa-phone" style="font-size:20px"></i>
+                                </div>
+                                <div class="col-xs-8 no-padding no-margin">
+                                    <h4>Location</h4>
+                                </div>
+                                <div class="col-xs-2 no-padding no-margin">
+                                    <label class="switch no-margin">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                                    <i class="fa fa-fw fa-phone" style="font-size:20px"></i>
+                                </div>
+                                <div class="col-xs-8 no-padding no-margin">
+                                    <h4>Internet</h4>
+                                </div>
+                                <div class="col-xs-2 no-padding no-margin">
+                                    <label class="switch no-margin">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                                    <i class="fa fa-fw fa-phone" style="font-size:20px"></i>
+                                </div>
+                                <div class="col-xs-8 no-padding no-margin">
+                                    <h4>Apps</h4>
+                                </div>
+                                <div class="col-xs-2 no-padding no-margin">
+                                    <label class="switch no-margin">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading bg bg-inverse">
+                <div class="pull-left">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#familycare">Family Care</a>
+                    </h4>
+                </div>
+                <div class="pull-right">
+                    <a href="#" style="color:white;">
+                        <i class="fa fa-fw fa-refresh"></i> Sync
+                    </a>
+                </div>
+            </div>
+            <div id="familycare" class="panel-collapse collapse">
+                <div class="panel-body no-padding">
+                    <div class="list-group no-margin">
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-chevron-right"></i>
+                            <i class="fa fa-fw fa-check"></i> Sent mail
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-chevron-right"></i>
+                            <i class="fa fa-fw fa-check"></i> Sent mail
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-chevron-right"></i>
+                            <i class="fa fa-fw fa-check"></i> Sent mail
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-chevron-right"></i>
+                            <i class="fa fa-fw fa-check"></i> Sent mail
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

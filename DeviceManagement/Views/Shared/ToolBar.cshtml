@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DeviceManagement.Models.services>
+@using DeviceManagement.Models;
+@{ 
+    var controller = Session[MySession.Selected_Service].ToString(); //ViewContext.RouteData.GetRequiredString("controller");
+}
+<style type="text/css">
+    .toolbar_active {
+        border-bottom: 3px solid #162636 !important;
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+    }
+</style>
+<section class="toolbar clearfix m-t-large m-b no-margin">
+    @foreach (var serv in Model)
+    {
+        <a class="btn btn-inverse btn-circle active-Toolbar @(controller == serv.service_title.Trim().ToString() ? "toolbar_active":"")"
+           href="@Url.Action("Index",serv.service_controller,new {device_id = Session[MySession.Selected_Device_Id].ToString() })">
+            <i class="@serv.icon"></i>@serv.service_title <b class="badge bg-black">5</b>
+        </a>
+        <div style="display:none">controll: @controller service_controller:@serv.service_controller service_title:@serv.service_title </div>
+    }
+    <a href="@Url.Action("Index","Manage",new {device_id = Session[MySession.Selected_Device_Id].ToString() })"
+       class="btn btn-inverse btn-circle  @(controller == "Manage"?"toolbar_active":"")">
+        <i class="fa fa-cogs"></i>Manage Device
+    </a>
+</section>
+<!--
+<section class="toolbar clearfix m-t-large m-b no-margin">
+    <a class="btn btn-inverse btn-circle active-Toolbar @(controller == "Messages"?"toolbar_active":"")" href="@Url.Action("Index","Messages",new {device_id = Session[MySession.Selected_Device_Id].ToString() })">
+        <i class="fa fa-envelope-o"></i>Messages <b class="badge bg-black">5</b>
+    </a>
+    <a href="@Url.Action("Index","CallLogs",new {device_id = Session[MySession.Selected_Device_Id].ToString() })"
+       class="btn btn-inverse btn-circle @(controller == "CallLogs"?"toolbar_active":"")">
+        <i class="fa fa-phone"></i>Call Logs
+    </a>
+    <a href="@Url.Action("Index","Contacts",new {device_id = Session[MySession.Selected_Device_Id].ToString() })" 
+       class="btn btn-info btn-inverse btn-circle @(controller == "Contacts"?"toolbar_active":"")">
+        <i class="fa fa-address-book"></i>Contacts
+    </a>
+    <a href="#" class="btn btn-inverse btn-circle @(controller == "Gallery"?"toolbar_active":"")">
+        <i class="fa fa-file-image-o "></i>Gallery
+    </a>
+    <a href="calendar.html" class="btn btn-warning btn-inverse btn-circle">
+        <i class="fa fa-folder"></i>File Manager
+    </a>
+    <a href="@Url.Action("Index","Location",new {device_id = Session[MySession.Selected_Device_Id].ToString() })" 
+       class="btn btn-danger btn-inverse btn-circle @(controller == "Location"?"toolbar_active":"")">
+        <i class="fa fa-map-marker"></i>Location
+    </a>
+    <a href="#" class="btn btn-inverse btn-circle">
+        <i class="fa fa-camera"></i>Camera
+    </a>
+    <a href="#" class="btn btn-inverse btn-circle">
+        <i class="fa fa-microphone"></i>Mic
+    </a>
+    <a href="#" class="btn btn-inverse btn-circle">
+        <i class="fa fa-cloud"></i>Apps
+    </a>
+    <a href="#" class="btn btn-inverse btn-circle">
+        <i class="fa fa-desktop"></i>Screen Mirror
+    </a>
+    
+</section>
+    -->

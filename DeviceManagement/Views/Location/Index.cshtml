@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterLayoutPage.cshtml";
+}
+@section Scripts {
+    <script type="text/javascript"
+            src="http://maps.google.com/maps/api/js?key=AIzaSyDAlriLAnNG5EFW1KlnIvafroYB91DI72k"></script>
+}
+@section Styles {
+    
+}
+ 
+<div class="row" style="padding:10px;">
+        <section class="panel">
+            <header class="panel-heading">Phone Location</header>
+            <div class="panel-body">
+                <div id="map_canvas" class="row" style="height:500px;"></div>
+            </div>
+        </section>
+</div>
+
+<script type="text/javascript">
+    function initialize() {
+        var latlng = new google.maps.LatLng(40.716948, -74.003563);
+        var options = {
+            zoom: 14, center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById
+            ("map_canvas"), options);
+    }
+    $(function () {
+        initialize();
+    });
+
+</script> 
+

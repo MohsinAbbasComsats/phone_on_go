@@ -1,0 +1,42 @@
+﻿@using DeviceManagement.Models;
+@model IEnumerable<DeviceManagement.Models.device>
+
+<nav id="nav" class="nav-primary hidden-xs nav-vertical">
+    <ul class="nav affix-top" data-spy="affix" data-offset-top="50">
+        <li class="@(Session[MySession.Selected_Device_Id].ToString() == "Dashboard" ?"active":"")">
+            <a href="@Url.Action("Dashboard","Master")">
+                <i class="fa fa-dashboard fa-lg"></i><span>Dashboard</span>
+            </a>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li class="@(Session[MySession.Selected_Device_Id].ToString() == item.device_id.ToString() ?"active":"")">               
+                <a href="@Url.Action("Index","Messages",new { device_id = item.device_id})"><i class="fa fa-mobile fa-lg"></i><span>@item.device_title</span></a>
+            </li>
+        }
+        <li>
+            <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i><span>Add Device</span></a>
+        </li>
+    </ul>
+</nav>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="left:0px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add a Device</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-signin" action='@Url.Action("AddDevice","Master")' method="post">
+                        <input type="text" id="inputEmail" name="deviceTitle" class="form-control" placeholder="Device Title" required="" autofocus="">
+                        <br />
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

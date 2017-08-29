@@ -1,0 +1,24 @@
+﻿@model IEnumerable<DeviceManagement.Models.calllogs>
+<div class="row no-margin">
+    <table class="table table-striped m-b-none dataTable" data-ride="datatables" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+        <thead>
+            <tr role="row">
+                <th width="20%" class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 217px;">Calls ID</th>
+                <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 278px;">Mobile Number</th>
+                <th width="15%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 154px;">Time Stamp</th>
+            </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class=" sorting_1">@item.calllogs_id</td>
+                    <td class="">@item.mobile_number</td>
+                    <td class="">@item.calllogs_timestamp</td>
+                </tr>
+            }           
+        </tbody>
+    </table>
+</div>
+
+

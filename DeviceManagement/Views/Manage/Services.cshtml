@@ -1,0 +1,27 @@
+﻿@model IEnumerable<DeviceManagement.Models.UserSubstribedServicesViewModel>
+<div >
+    
+
+</div>
+
+<div class="list-group  no-margin">
+    @foreach (var item in Model)
+    {
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-xs-2 no-margin" style="padding-top:10px;">
+                    <i class="@item.service_icon" style="font-size:20px"></i>
+                </div>
+                <div class="col-xs-8 no-padding no-margin">
+                    <h4>@item.service_title</h4>
+                </div>
+                <div class="col-xs-2 no-padding no-margin">
+                    <label class="switch no-margin">
+                        <input name="userSubSrv" value="@item.service_id" type="checkbox" @(item.active==true? "checked =checked":"") >
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    }   
+</div>
